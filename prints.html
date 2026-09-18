@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prints — Artist Portfolio</title>
+  <meta name="description" content="Prints — Artist Portfolio">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="header">
+  <div class="header-container">
+    <a href="index.html" class="logo">
+      <span class="logo-main">ARTIST</span>
+      <span class="logo-sub">PORTFOLIO</span>
+    </a>
+    <nav class="desktop-nav">
+      <a href="paintings.html">Paintings</a>
+      <a href="brushes.html">Brushes</a>
+      <a href="prints.html">Prints</a>
+      <a href="videos.html">Videos</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <button class="menu-toggle" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <nav class="mobile-nav">
+    <a href="paintings.html">Paintings</a>
+    <a href="brushes.html">Brushes</a>
+    <a href="prints.html">Prints</a>
+    <a href="videos.html">Videos</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+</header>
+<main>
+  <section class="page-hero">
+    <div class="page-hero-bg" style="background-image:url('images/prints.jpg');"></div>
+    <div class="page-hero-overlay"></div>
+    <div class="page-hero-content reveal">
+      <p class="eyebrow">03 / LIMITED EDITION</p>
+      <h1>Prints</h1>
+    </div>
+  </section>
+  <section class="page-content">
+      <div class="page-intro reveal">
+        <p class="eyebrow dark">LIMITED EDITIONS</p><h2>Bring the work <em>home.</em></h2>
+        <p>Discover limited edition prints created from selected original artworks.</p>
+      </div>
+      <div class="card-grid">
+        <article class="art-card reveal"><img src="images/prints.jpg" alt="Limited edition prints"><div class="art-card-body"><h3>Limited Edition I</h3><p>Fine art print.</p></div></article>
+        <article class="art-card reveal"><img src="images/paintings.jpg" alt="Artwork print"><div class="art-card-body"><h3>Limited Edition II</h3><p>Archival quality artwork.</p></div></article>
+        <article class="art-card reveal"><img src="images/hero.jpg" alt="Featured print"><div class="art-card-body"><h3>Featured Print</h3><p>Selected from the collection.</p></div></article>
+      </div>
+    </section>
+</main>
+<footer class="footer">
+  <div class="footer-top">
+    <a href="index.html" class="footer-logo">ARTIST PORTFOLIO</a>
+    <div class="footer-links">
+      <a href="paintings.html">Paintings</a>
+      <a href="brushes.html">Brushes</a>
+      <a href="prints.html">Prints</a>
+      <a href="videos.html">Videos</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© <span id="year"></span> Artist Portfolio. All rights reserved.</p>
+    <a href="#">Back to top ↑</a>
+  </div>
+</footer>
+<script src="script.js"></script>
+</body>
+</html>

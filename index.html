@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Artist Portfolio</title>
+
+<meta
+ name="description"
+ content="A modern responsive artist portfolio and gallery website."
+/>
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <!-- =========================
+       HEADER
+  ========================== -->
+
+  <header class="header" id="home">
+    <div class="header-container">
+
+
+  <a href="#home" class="logo">
+    <span class="logo-main">ARTIST</span>
+    <span class="logo-sub">PORTFOLIO</span>
+  </a>
+
+  <nav class="desktop-nav">
+      <a href="paintings.html">Paintings</a>
+      <a href="brushes.html">Brushes</a>
+      <a href="prints.html">Prints</a>
+      <a href="videos.html">Videos</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+
+  <button
+    class="menu-toggle"
+    aria-label="Open menu"
+    aria-expanded="false"
+  >
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
+</div>
+
+<!-- Mobile Menu -->
+<nav class="mobile-nav">
+    <a href="paintings.html">Paintings</a>
+    <a href="brushes.html">Brushes</a>
+    <a href="prints.html">Prints</a>
+    <a href="videos.html">Videos</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+
+
+  </header>
+
+  <!-- =========================
+       HERO
+  ========================== -->
+
+  <section class="hero">
+
+
+<div
+  class="hero-bg"
+  style="background-image: url('images/hero.jpg');"
+></div>
+
+<div class="hero-overlay"></div>
+
+<div class="hero-content">
+
+  <p class="eyebrow">CONTEMPORARY ART</p>
+
+  <h1>
+    THE ART OF
+    <br />
+    OBSERVATION
+  </h1>
+
+  <a href="paintings.html" class="button button-light">
+    Explore Collection
+  </a>
+
+</div>
+
+<div class="scroll-indicator">
+  <span>SCROLL</span>
+  <div></div>
+</div>
+
+
+  </section>
+
+  <!-- =========================
+       INTRO
+  ========================== -->
+
+  <section class="intro section-padding">
+
+
+<div class="intro-content reveal">
+
+  <p class="eyebrow dark">THE COLLECTION</p>
+
+  <h2>
+    Paintings created with
+    <em>patience, observation</em>
+    and attention to detail.
+  </h2>
+
+  <p class="intro-text">
+    Explore a collection of original works, prints and artistic
+    resources. Replace every image in this template with your own
+    artwork and customize the text to create your personal portfolio.
+  </p>
+
+</div>
+
+
+  </section>
+
+  <!-- =========================
+       PAINTINGS
+  ========================== -->
+
+  <section
+    class="feature-section"
+    id="paintings"
+  >
+
+
+<div class="feature-image reveal">
+
+  <!-- Change image here -->
+  <img
+    src="images/paintings.jpg"
+    alt="Paintings collection"
+  />
+
+</div>
+
+<div class="feature-content reveal">
+
+  <p class="eyebrow dark">01 / COLLECTION</p>
+
+  <h2>Paintings</h2>
+
+  <p>
+    Discover original paintings and explore the complete collection
+    of available artwork.
+  </p>
+
+  <a href="paintings.html" class="text-link">
+    Discover the collection
+    <span>→</span>
+  </a>
+
+</div>
+
+
+  </section>
+
+  <!-- =========================
+       BRUSHES
+  ========================== -->
+
+  <section
+    class="feature-section reverse"
+    id="brushes"
+  >
+
+
+<div class="feature-image reveal">
+
+  <!-- Change image here -->
+  <img
+    src="images/brushes.jpg"
+    alt="Professional brushes"
+  />
+
+</div>
+
+<div class="feature-content reveal">
+
+  <p class="eyebrow dark">02 / TOOLS</p>
+
+  <h2>Brushes</h2>
+
+  <h3>Fine Detail Professional Brush Set</h3>
+
+  <p>
+    A carefully selected collection of brushes designed for precision,
+    detail and artistic control.
+  </p>
+
+  <a href="brushes.html" class="text-link">
+    Discover the brushes
+    <span>→</span>
+  </a>
+
+</div>
+
+
+  </section>
+
+  <!-- =========================
+       PRINTS
+  ========================== -->
+
+  <section
+    class="full-image-section"
+    id="prints"
+  >
+
+
+<div
+  class="full-image-bg"
+  style="background-image: url('images/prints.jpg');"
+></div>
+
+<div class="full-image-overlay"></div>
+
+<div class="full-image-content reveal">
+
+  <p class="eyebrow">03 / LIMITED EDITION</p>
+
+  <h2>Prints</h2>
+
+  <p>
+    Purchase your limited edition print.
+    <br />
+    Invest and enjoy.
+  </p>
+
+  <a href="prints.html" class="button button-light">
+    View Prints
+  </a>
+
+</div>
+
+
+  </section>
+
+
+<!-- =========================
+     VIDEOS
+========================== -->
+
+<section
+  class="feature-section"
+  id="videos"
+>
+
+  <div
+    class="feature-image video-feature reveal"
+    data-video="videos/video-01.mp4"
+  >
+
+    <!-- Video 01 thumbnail -->
+    <img
+      src="images/video-01.jpg"
+      alt="Video 01"
+    />
+
+    <button
+      class="play-button"
+      type="button"
+      aria-label="Play Video 01"
+    >
+      <span>▶</span>
+    </button>
+
+  </div>
+
+
+  <div class="feature-content reveal">
+
+    <p class="eyebrow dark">04 / PROCESS</p>
+
+    <h2>Videos</h2>
+
+    <p>
+      Watch videos and learn more about the creative process,
+      techniques and ideas behind each artwork.
+    </p>
+
+    <a href="videos.html" class="text-link">
+      Watch videos
+      <span>→</span>
+    </a>
+
+  </div>
+
+</section>
+
+
+<!-- =========================
+     VIDEO MODAL
+========================== -->
+
+<div class="video-modal" id="videoModal">
+
+  <div class="video-modal-backdrop"></div>
+
+  <div class="video-modal-content">
+
+    <button
+      class="video-modal-close"
+      id="videoModalClose"
+      type="button"
+      aria-label="Close video"
+    >
+      ×
+    </button>
+
+    <video
+      id="modalVideo"
+      controls
+      playsinline
+    >
+      <source
+        id="modalVideoSource"
+        src=""
+        type="video/mp4"
+      />
+
+      Your browser does not support HTML5 video.
+    </video>
+
+  </div>
+
+</div>
+
+
+
+  <!-- =========================
+       PRESS
+  ========================== -->
+
+  <section class="press-section section-padding">
+
+
+<div class="section-heading reveal">
+
+  <p class="eyebrow dark">FEATURED IN</p>
+
+  <h2>Press</h2>
+
+</div>
+
+<div class="press-grid">
+
+  <div class="press-card reveal">
+    <img
+      src="images/press-1.jpg"
+      alt="Press feature 1"
+    />
+  </div>
+
+  <div class="press-card reveal">
+    <img
+      src="images/press-2.jpg"
+      alt="Press feature 2"
+    />
+  </div>
+
+  <div class="press-card reveal">
+    <img
+      src="images/press-3.jpg"
+      alt="Press feature 3"
+    />
+  </div>
+
+  <div class="press-card reveal">
+    <img
+      src="images/press-4.jpg"
+      alt="Press feature 4"
+    />
+  </div>
+
+</div>
+
+
+  </section>
+
+  <!-- =========================
+       NEWSLETTER
+  ========================== -->
+
+  <section
+    class="newsletter"
+    id="newsletter"
+  >
+
+
+<div class="newsletter-content reveal">
+
+  <p class="eyebrow">STAY CONNECTED</p>
+
+  <h2>Newsletter</h2>
+
+  <p>
+    Subscribe now to receive news about:
+  </p>
+
+  <div class="newsletter-list">
+    <span>Prints</span>
+    <span>Brushes</span>
+    <span>Paintings</span>
+    <span>Workshops</span>
+  </div>
+
+  <form class="newsletter-form">
+
+    <input
+      type="email"
+      placeholder="Your email address"
+      required
+    />
+
+    <button type="submit">
+      Subscribe
+    </button>
+
+  </form>
+
+  <p class="form-message"></p>
+
+</div>
+
+
+  </section>
+
+  <!-- =========================
+       FOOTER
+  ========================== -->
+
+  <footer class="footer">
+
+
+<div class="footer-top">
+
+  <a href="#home" class="footer-logo">
+    ARTIST PORTFOLIO
+  </a>
+
+  <div class="footer-links">
+    <a href="paintings.html">Paintings</a>
+    <a href="brushes.html">Brushes</a>
+    <a href="prints.html">Prints</a>
+    <a href="videos.html">Videos</a>
+    <a href="about.html">About</a>
+  </div>
+
+</div>
+
+<div class="footer-bottom">
+
+  <p>
+    © <span id="year"></span> Artist Portfolio.
+    All rights reserved.
+  </p>
+
+  <a href="#home">
+    Back to top ↑
+  </a>
+
+</div>
+
+
+  </footer>
+
+  <script src="script.js"></script>
+
+</body>
+</html>
