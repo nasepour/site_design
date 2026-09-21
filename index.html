@@ -13,6 +13,7 @@
 />
 
   <link rel="stylesheet" href="style.css" />
+  <script defer src="i18n.js"></script>
 </head>
 
 <body>
@@ -25,18 +26,23 @@
     <div class="header-container">
 
 
-  <a href="#home" class="logo">
+  <a 
+    <div class="lang-switcher">
+  <button class="lang-btn active" data-lang="en">EN</button>
+  <button class="lang-btn" data-lang="fa">FA</button>
+</div>
+    href="#home" class="logo">
     <span class="logo-main">ARTIST</span>
     <span class="logo-sub">PORTFOLIO</span>
   </a>
 
   <nav class="desktop-nav">
-      <a href="paintings.html">Paintings</a>
-      <a href="brushes.html">Brushes</a>
-      <a href="prints.html">Prints</a>
-      <a href="videos.html">Videos</a>
-      <a href="about.html">About</a>
-      <a href="contact.html">Contact</a>
+      <a href="paintings.html" data-lang-key="nav_paintings">Paintings</a>
+      <a href="brushes.html" data-lang-key="nav_brushes">Brushes</a>
+      <a href="prints.html" data-lang-key="nav_prints">Prints</a>
+      <a href="videos.html" data-lang-key="nav_videos">Videos</a>
+      <a href="about.html" data-lang-key="nav_about">About</a>
+      <a href="contact.html" data-lang-key="nav_contact">Contact</a>
     </nav>
 
   <button
@@ -52,13 +58,13 @@
 </div>
 
 <!-- Mobile Menu -->
-<nav class="mobile-nav">
-    <a href="paintings.html">Paintings</a>
-    <a href="brushes.html">Brushes</a>
-    <a href="prints.html">Prints</a>
-    <a href="videos.html">Videos</a>
-    <a href="about.html">About</a>
-    <a href="contact.html">Contact</a>
+    <nav class="mobile-nav">
+    <a href="paintings.html" data-lang-key="nav_paintings">Paintings</a>
+    <a href="brushes.html" data-lang-key="nav_brushes">Brushes</a>
+    <a href="prints.html" data-lang-key="nav_prints">Prints</a>
+    <a href="videos.html" data-lang-key="nav_videos">Videos</a>
+    <a href="about.html" data-lang-key="nav_about">About</a>
+    <a href="contact.html" data-lang-key="nav_contact">Contact</a>
   </nav>
 
 
@@ -80,22 +86,22 @@
 
 <div class="hero-content">
 
-  <p class="eyebrow">CONTEMPORARY ART</p>
+  <p class="eyebrow" data-lang-key="hero_eyebrow">CONTEMPORARY ART</p>
 
   <h1>
-    THE ART OF
+    <span data-lang-key="hero_title_line1">THE ART OF</span>
     <br />
-    OBSERVATION
+    <span data-lang-key="hero_title_line2">OBSERVATION</span>
   </h1>
 
-  <a href="paintings.html" class="button button-light">
+  <a href="paintings.html" class="button button-light" data-lang-key="hero_button">
     Explore Collection
   </a>
 
 </div>
 
 <div class="scroll-indicator">
-  <span>SCROLL</span>
+  <span data-lang-key="hero_scroll">SCROLL</span>به
   <div></div>
 </div>
 
@@ -111,15 +117,15 @@
 
 <div class="intro-content reveal">
 
-  <p class="eyebrow dark">THE COLLECTION</p>
+  <p class="eyebrow dark" data-lang-key="intro_eyebrow">THE COLLECTION</p>
 
   <h2>
-    Paintings created with
-    <em>patience, observation</em>
-    and attention to detail.
+    <span data-lang-key="intro_title_1">Paintings created with</span>
+    <em data-lang-key="intro_title_em">patience, observation</em>
+    <span data-lang-key="intro_title_2">and attention to detail.</span>
   </h2>
 
-  <p class="intro-text">
+  <p class="intro-text" data-lang-key="intro_text">
     Explore a collection of original works, prints and artistic
     resources. Replace every image in this template with your own
     artwork and customize the text to create your personal portfolio.
@@ -152,17 +158,17 @@
 
 <div class="feature-content reveal">
 
-  <p class="eyebrow dark">01 / COLLECTION</p>
+  <p class="eyebrow dark" data-lang-key="paintings_eyebrow">01 / COLLECTION</p>
 
-  <h2>Paintings</h2>
+  <h2 data-lang-key="paintings_title">Paintings</h2>
 
-  <p>
+  <p data-lang-key="paintings_text">
     Discover original paintings and explore the complete collection
     of available artwork.
   </p>
 
   <a href="paintings.html" class="text-link">
-    Discover the collection
+    <span data-lang-key="paintings_link">Discover the collection</span>
     <span>→</span>
   </a>
 
@@ -233,17 +239,17 @@
 
 <div class="full-image-content reveal">
 
-  <p class="eyebrow">03 / LIMITED EDITION</p>
+  <p class="eyebrow" data-lang-key="prints_eyebrow">03 / LIMITED EDITION</p>
 
-  <h2>Prints</h2>
+  <h2 data-lang-key="prints_title">Prints</h2>
 
-  <p>
+  <p data-lang-key="prints_text">
     Purchase your limited edition print.
     <br />
     Invest and enjoy.
   </p>
 
-  <a href="prints.html" class="button button-light">
+  <a href="prints.html" class="button button-light" data-lang-key="prints_button">
     View Prints
   </a>
 
@@ -276,6 +282,7 @@
     <button
       class="play-button"
       type="button"
+      data-lang-key="videos_play"
       aria-label="Play Video 01"
     >
       <span>▶</span>
@@ -286,17 +293,17 @@
 
   <div class="feature-content reveal">
 
-    <p class="eyebrow dark">04 / PROCESS</p>
+    <p class="eyebrow dark" data-lang-key="videos_eyebrow">04 / PROCESS</p>
 
-    <h2>Videos</h2>
+    <h2 data-lang-key="videos_title">Videos</h2>
 
-    <p>
+    <p data-lang-key="videos_text">
       Watch videos and learn more about the creative process,
       techniques and ideas behind each artwork.
     </p>
 
     <a href="videos.html" class="text-link">
-      Watch videos
+      <span data-lang-key="videos_link">Watch videos</span>
       <span>→</span>
     </a>
 
@@ -353,9 +360,9 @@
 
 <div class="section-heading reveal">
 
-  <p class="eyebrow dark">FEATURED IN</p>
+  <p class="eyebrow dark" data-lang-key="press_eyebrow">FEATURED IN</p>
 
-  <h2>Press</h2>
+  <h2 data-lang-key="press_title">Press</h2>
 
 </div>
 
@@ -406,30 +413,31 @@
 
 <div class="newsletter-content reveal">
 
-  <p class="eyebrow">STAY CONNECTED</p>
+  <p class="eyebrow" data-lang-key="newsletter_eyebrow">STAY CONNECTED</p>
 
-  <h2>Newsletter</h2>
+  <h2 data-lang-key="newsletter_title">Newsletter</h2>
 
-  <p>
+  <p data-lang-key="newsletter_text">
     Subscribe now to receive news about:
   </p>
 
   <div class="newsletter-list">
-    <span>Prints</span>
-    <span>Brushes</span>
-    <span>Paintings</span>
-    <span>Workshops</span>
+    <span data-lang-key="newsletter_item_prints">Prints</span>
+    <span data-lang-key="newsletter_item_brushes">Brushes</span>
+    <span data-lang-key="newsletter_item_paintings">Paintings</span>
+    <span data-lang-key="newsletter_item_workshops">Workshops</span>
   </div>
 
   <form class="newsletter-form">
 
     <input
       type="email"
+      data-lang-key="newsletter_placeholder"
       placeholder="Your email address"
       required
     />
 
-    <button type="submit">
+    <button type="submit" data-lang-key="newsletter_button">
       Subscribe
     </button>
 
@@ -456,11 +464,11 @@
   </a>
 
   <div class="footer-links">
-    <a href="paintings.html">Paintings</a>
-    <a href="brushes.html">Brushes</a>
-    <a href="prints.html">Prints</a>
-    <a href="videos.html">Videos</a>
-    <a href="about.html">About</a>
+    <a href="paintings.html" data-lang-key="footer_paintings">Paintings</a>
+    <a href="brushes.html" data-lang-key="footer_brushes">Brushes</a>
+    <a href="prints.html" data-lang-key="footer_prints">Prints</a>
+    <a href="videos.html" data-lang-key="footer_videos">Videos</a>
+    <a href="about.html" data-lang-key="footer_about">About</a>
   </div>
 
 </div>
@@ -491,14 +499,14 @@
   <div class="chat-box" id="chatBox">
     <div class="chat-header">
       <div>
-        <strong>Artist Support</strong>
-        <span class="chat-status">● Online</span>
+        <strong data-lang-key="chat_title">Artist Support</strong>
+        <span class="chat-status" data-lang-key="chat_status">● Online</span>
       </div>
       <button class="chat-close" id="chatClose" aria-label="Close chat">×</button>
     </div>
 
     <div class="chat-messages" id="chatMessages">
-      <div class="chat-message bot">
+      <div class="chat-message bot" data-lang-key="chat_welcome">
         Hi! 👋 Welcome to Artist Portfolio. How can I help you today?
       </div>
     </div>
@@ -507,6 +515,7 @@
       <input
         type="text"
         id="chatInput"
+        data-lang-key="chat_placeholder"
         placeholder="Type your message..."
         autocomplete="off"
         required
@@ -515,33 +524,33 @@
     </form>
   </div>
 
-  <!-- =========================
+    <!-- =========================
        FLOATING CTA
   ========================== -->
   <a href="#classes" class="floating-cta" aria-label="Learn to Paint">
     <span class="floating-cta-icon">🎨</span>
-    <span class="floating-cta-text">Learn to Paint</span>
+    <span class="floating-cta-text" data-lang-key="cta_text">Learn to Paint</span>
   </a>
 
-  <!-- =========================
+    <!-- =========================
        CLASSES / WORKSHOPS
   ========================== -->
   <section class="classes-section section-padding" id="classes">
 
     <div class="section-heading reveal">
-      <p class="eyebrow dark">LEARN WITH US</p>
-      <h2>Painting Classes</h2>
-      <p class="section-subtitle">
+      <p class="eyebrow dark" data-lang-key="classes_eyebrow">LEARN WITH US</p>
+      <h2 data-lang-key="classes_title">Painting Classes</h2>
+      <p class="section-subtitle" data-lang-key="classes_subtitle">
         Join our painting workshops — online or in-person.
       </p>
     </div>
 
     <!-- فیلتر -->
     <div class="classes-filter reveal">
-      <button class="filter-btn active" data-filter="all">All</button>
-      <button class="filter-btn" data-filter="online">Online</button>
-      <button class="filter-btn" data-filter="in-person">In Person</button>
-      <button class="filter-btn" data-filter="hybrid">Hybrid</button>
+      <button class="filter-btn active" data-filter="all" data-lang-key="filter_all">All</button>
+      <button class="filter-btn" data-filter="online" data-lang-key="filter_online">Online</button>
+      <button class="filter-btn" data-filter="in-person" data-lang-key="filter_inperson">In Person</button>
+      <button class="filter-btn" data-filter="hybrid" data-lang-key="filter_hybrid">Hybrid</button>
     </div>
 
     <!-- گرید کلاس‌ها -->
@@ -552,18 +561,18 @@
         <div class="class-art art-1">
           <span class="class-number">01</span>
           <div class="art-shape"></div>
-          <span class="class-badge online">Online</span>
+          <span class="class-badge online" data-lang-key="class1_badge">Online</span>
         </div>
         <div class="class-body">
-          <h3>Beginner Painting</h3>
-          <p class="class-desc">Learn color, composition and brushwork from scratch.</p>
+          <h3 data-lang-key="class1_title">Beginner Painting</h3>
+          <p class="class-desc" data-lang-key="class1_desc">Learn color, composition and brushwork from scratch.</p>
           <ul class="class-info">
-            <li><span>📅</span> Saturdays</li>
-            <li><span>🕒</span> 10:00 – 12:00</li>
-            <li><span>💻</span> Online (Zoom)</li>
-            <li><span>💰</span> $49 / session</li>
+            <li><span>📅</span> <span data-lang-key="class1_day">Saturdays</span></li>
+            <li><span>🕒</span> <span data-lang-key="class1_time">10:00 – 12:00</span></li>
+            <li><span>💻</span> <span data-lang-key="class1_loc">Online (Zoom)</span></li>
+            <li><span>💰</span> <span data-lang-key="class1_price">$49 / session</span></li>
           </ul>
-          <a href="contact.html" class="button-dark">Reserve Spot</a>
+          <a href="contact.html" class="button-dark" data-lang-key="class1_btn">Reserve Spot</a>
         </div>
       </div>
 
@@ -572,18 +581,18 @@
         <div class="class-art art-2">
           <span class="class-number">02</span>
           <div class="art-shape"></div>
-          <span class="class-badge in-person">In Person</span>
+          <span class="class-badge in-person" data-lang-key="class2_badge">In Person</span>
         </div>
         <div class="class-body">
-          <h3>Advanced Oil Painting</h3>
-          <p class="class-desc">Deepen your technique with oils, glazing and layering.</p>
+          <h3 data-lang-key="class2_title">Advanced Oil Painting</h3>
+          <p class="class-desc" data-lang-key="class2_desc">Deepen your technique with oils, glazing and layering.</p>
           <ul class="class-info">
-            <li><span>📅</span> Tue & Thu</li>
-            <li><span>🕒</span> 18:00 – 20:30</li>
-            <li><span>🏛️</span> Studio, Tehran</li>
-            <li><span>💰</span> $79 / session</li>
+            <li><span>📅</span> <span data-lang-key="class2_day">Tue &amp; Thu</span></li>
+            <li><span>🕒</span> <span data-lang-key="class2_time">18:00 – 20:30</span></li>
+            <li><span>🏛️</span> <span data-lang-key="class2_loc">Studio, Tehran</span></li>
+            <li><span>💰</span> <span data-lang-key="class2_price">$79 / session</span></li>
           </ul>
-          <a href="contact.html" class="button-dark">Reserve Spot</a>
+          <a href="contact.html" class="button-dark" data-lang-key="class2_btn">Reserve Spot</a>
         </div>
       </div>
 
@@ -592,18 +601,18 @@
         <div class="class-art art-3">
           <span class="class-number">03</span>
           <div class="art-shape"></div>
-          <span class="class-badge online">Online</span>
+          <span class="class-badge online" data-lang-key="class3_badge">Online</span>
         </div>
         <div class="class-body">
-          <h3>Watercolor Workshop</h3>
-          <p class="class-desc">Discover the beauty of watercolor — soft, fluid, expressive.</p>
+          <h3 data-lang-key="class3_title">Watercolor Workshop</h3>
+          <p class="class-desc" data-lang-key="class3_desc">Discover the beauty of watercolor — soft, fluid, expressive.</p>
           <ul class="class-info">
-            <li><span>📅</span> Fridays</li>
-            <li><span>🕒</span> 16:00 – 18:00</li>
-            <li><span>💻</span> Online (Google Meet)</li>
-            <li><span>💰</span> $39 / session</li>
+            <li><span>📅</span> <span data-lang-key="class3_day">Fridays</span></li>
+            <li><span>🕒</span> <span data-lang-key="class3_time">16:00 – 18:00</span></li>
+            <li><span>💻</span> <span data-lang-key="class3_loc">Online (Google Meet)</span></li>
+            <li><span>💰</span> <span data-lang-key="class3_price">$39 / session</span></li>
           </ul>
-          <a href="contact.html" class="button-dark">Reserve Spot</a>
+          <a href="contact.html" class="button-dark" data-lang-key="class3_btn">Reserve Spot</a>
         </div>
       </div>
 
@@ -612,51 +621,19 @@
         <div class="class-art art-4">
           <span class="class-number">04</span>
           <div class="art-shape"></div>
-          <span class="class-badge hybrid">Hybrid</span>
+          <span class="class-badge hybrid" data-lang-key="class4_badge">Hybrid</span>
         </div>
         <div class="class-body">
-          <h3>Private Lessons</h3>
-          <p class="class-desc">One-on-one sessions tailored to your goals and pace.</p>
+          <h3 data-lang-key="class4_title">Private Lessons</h3>
+          <p class="class-desc" data-lang-key="class4_desc">One-on-one sessions tailored to your goals and pace.</p>
           <ul class="class-info">
-            <li><span>📅</span> Flexible</li>
-            <li><span>🕒</span> By appointment</li>
-            <li><span>🌐</span> Online or In Studio</li>
-            <li><span>💰</span> $120 / session</li>
+            <li><span>📅</span> <span data-lang-key="class4_day">Flexible</span></li>
+            <li><span>🕒</span> <span data-lang-key="class4_time">By appointment</span></li>
+            <li><span>🌐</span> <span data-lang-key="class4_loc">Online or In Studio</span></li>
+            <li><span>💰</span> <span data-lang-key="class4_price">$120 / session</span></li>
           </ul>
-          <a href="contact.html" class="button-dark">Book Now</a>
+          <a href="contact.html" class="button-dark" data-lang-key="class4_btn">Book Now</a>
         </div>
       </div>
 
     </div>
-
-    <!-- Next Session Countdown -->
-    <div class="next-session reveal">
-      <div class="next-session-label">⏰ Next class starts in</div>
-      <div class="countdown" id="countdown">
-        <div class="countdown-item">
-          <span id="cd-days">02</span>
-          <small>Days</small>
-        </div>
-        <div class="countdown-item">
-          <span id="cd-hours">14</span>
-          <small>Hours</small>
-        </div>
-        <div class="countdown-item">
-          <span id="cd-mins">33</span>
-          <small>Min</small>
-        </div>
-        <div class="countdown-item">
-          <span id="cd-secs">12</span>
-          <small>Sec</small>
-        </div>
-      </div>
-      <div class="next-session-name">Watercolor Workshop — Friday 16:00</div>
-      <a href="contact.html" class="button button-dark">Reserve Your Spot</a>
-    </div>
-
-  </section>
-
-  <script src="script.js"></script>
-
-</body>
-</html>
