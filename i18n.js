@@ -1,35 +1,104 @@
 // ==========================================
-// i18n.js — سیستم دوزبانه کردن سایت
+// i18n.js — سیستم دوزبانه (EN / FA)
 // ==========================================
 
 const DEFAULT_LANG = 'en';
+const RTL_LANGS = ['fa', 'ar', 'he'];
 
+let translationsCache = null;
+
+/* -----------------------------------------
+   لود کردن فایل ترجمه (فقط یک بار)
+----------------------------------------- */
+async function loadTranslations() {
+  if (translationsCache) return translationsCache;
+
+  const response = await fetch('translations.json');
+  if (!response.ok) {
+    throw new Error('translations.json not found');
+  }
+
+  translationsCache = await response.json();
+  return translationsCache;
+}
+
+/* -----------------------------------------
+   اعمال ترجمه روی یک عنصر
+----------------------------------------- */
+function applyTranslation(el, value) {
+  // 1) اگر placeholder دارد → فقط placeholder را عوض کن
+  if (el.hasAttribute('placeholder')) {
+    el.setAttribute('placeholder', value);
+    return;
+  }
+
+  // 2) اگر aria-label دارد و فرزند داخلی ندارد → فقط aria-label را عوض کن
+  if (el.hasAttribute('aria-label') && el.children.length === 0) {
+    el.setAttribute('aria-label', value);
+    return;
+  }
+
+  // 3) اگر داخلش عنصری با data-lang-key هست → خودش جدا ترجمه می‌شود
+  if (el.querySelector('[data-lang-key]')) {
+    return;
+  }
+
+  // 4) اگر <a> یا <button> است → فقط متن‌های مستقیم را عوض کن،
+  //    آیکون‌ها (مثل → و ▶) دست‌نخورده بمانند
+  if (el.tagName === 'A' || el.tagName === 'BUTTON') {
+    const textNodes = Array.from(el.childNodes).filter(
+      node => node.nodeType === Node.TEXT_NODE && node.textContent.trim() !== ''
+    );
+
+    if (textNodes.length > 0) {
+      textNodes[0].textContent = value;
+      return;
+    }
+
+    // اگر متن مستقیم نبود، اولین span بدون data-lang-key را عوض کن
+    const fallback = el.querySelector('span:not([data-lang-key])');
+    if (fallback) {
+      fallback.textContent = value;
+      return;
+    }
+  }
+
+  // 5) حالت پیش‌فرض → کل متن عنصر را عوض کن
+  el.textContent = value;
+}
+
+/* -----------------------------------------
+   تغییر زبان
+----------------------------------------- */
 async function setLanguage(lang) {
   try {
-    const response = await fetch('translations.json');
-    if (!response.ok) throw new Error('translations.json not found');
-    const translations = await response.json();
+    const translations = await loadTranslations();
     const texts = translations[lang];
 
-    if (!texts) return;
+    if (!texts) {
+      console.warn('Language not found:', lang);
+      return;
+    }
 
+    // ترجمه همه عناصر دارای data-lang-key
     document.querySelectorAll('[data-lang-key]').forEach(el => {
       const key = el.getAttribute('data-lang-key');
-      if (!texts[key]) return;
-
-      if (el.hasAttribute('placeholder')) {
-        el.setAttribute('placeholder', texts[key]);
-      } else if (el.hasAttribute('aria-label')) {
-        el.setAttribute('aria-label', texts[key]);
-      } else {
-        el.textContent = texts[key];
-      }
+      const value = texts[key];
+      if (!value) return;
+      applyTranslation(el, value);
     });
 
+    // ذخیره در localStorage
     localStorage.setItem('siteLang', lang);
-    document.documentElement.setAttribute('lang', lang);
-    document.documentElement.setAttribute('dir', lang === 'fa' ? 'rtl' : 'ltr');
 
+    // تنظیم lang و dir روی <html>
+    document.documentElement.setAttribute('lang', lang);
+    document.documentElement.setAttribute(
+      'dir',
+      RTL_LANGS.includes(lang) ? 'rtl' : 'ltr'
+    );
+
+    // آپدیت دکمه‌های زبان
     document.querySelectorAll('.lang-btn').forEach(btn => {
       btn.classList.toggle('active', btn.dataset.lang === lang);
     });
@@ -39,16 +108,23 @@ async function setLanguage(lang) {
   }
 }
 
+/* -----------------------------------------
+   راه‌اندازی اولیه
+----------------------------------------- */
 document.addEventListener('DOMContentLoaded', () => {
-  const savedLang = localStorage.getItem('siteLang')
-    || (navigator.language.startsWith('fa') ? 'fa' : 'en');
+  // زبان ذخیره‌شده یا زبان مرورگر
+  const savedLang =
+    localStorage.getItem('siteLang') ||
+    (navigator.language.startsWith('fa') ? 'fa' : DEFAULT_LANG);
 
   setLanguage(savedLang);
 
+  // کلیک روی دکمه‌های زبان
   document.querySelectorAll('.lang-btn').forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.preventDefault();
-      setLanguage(btn.dataset.lang);
+      const lang = btn.dataset.lang;
+      if (lang) setLanguage(lang);
     });
   });
 });
