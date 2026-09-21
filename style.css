@@ -2280,3 +2280,67 @@ body.video-open {
 
   .countdown-item span { font-size: 20px; }
 }
+/* =========================
+   LANGUAGE SWITCHER
+========================== */
+
+.lang-switcher {
+  display: flex;
+  gap: 6px;
+  margin-inline-start: auto;
+  margin-inline-end: 16px;
+  align-items: center;
+}
+
+.lang-btn {
+  background: transparent;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  color: inherit;
+  padding: 6px 12px;
+  font-size: 12px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.25s ease;
+  font-family: inherit;
+}
+
+.lang-btn:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.lang-btn.active {
+  background: #111;
+  color: #fff;
+  border-color: #111;
+}
+
+/* روی هدر تیره */
+.header .lang-btn {
+  border-color: rgba(255, 255, 255, 0.3);
+  color: #fff;
+}
+
+.header .lang-btn.active {
+  background: #fff;
+  color: #111;
+  border-color: #fff;
+}
+
+/* =========================
+   RTL SUPPORT (فارسی)
+========================== */
+
+html[dir="rtl"] body {
+  font-family: 'Vazirmatn', 'Tahoma', sans-serif;
+}
+
+html[dir="rtl"] .text-link span {
+  transform: scaleX(-1);
+  display: inline-block;
+}
+
+html[dir="rtl"] .desktop-nav,
+html[dir="rtl"] .footer-links {
+  direction: rtl;
+}
