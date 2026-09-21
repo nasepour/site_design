@@ -638,6 +638,57 @@
 
         </div>       <!-- بستن classes-grid -->
   </section>     <!-- بستن classes-section -->
+        </div>       <!-- بستن classes-grid -->
+  </section>     <!-- بستن classes-section -->
+
+  <!-- =========================
+       CHAT BOX SCRIPT
+  ========================== -->
+  <script>
+  document.addEventListener('DOMContentLoaded', function () {
+
+    const chatToggle   = document.getElementById('chatToggle');
+    const chatBox      = document.getElementById('chatBox');
+    const chatClose    = document.getElementById('chatClose');
+    const chatForm     = document.getElementById('chatForm');
+    const chatInput    = document.getElementById('chatInput');
+    const chatMessages = document.getElementById('chatMessages');
+
+    if (!chatToggle || !chatBox) return;
+
+    chatToggle.addEventListener('click', function () {
+      chatBox.classList.toggle('open');
+    });
+
+    chatClose.addEventListener('click', function () {
+      chatBox.classList.remove('open');
+    });
+
+    chatForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const text = chatInput.value.trim();
+      if (!text) return;
+
+      const userMsg = document.createElement('div');
+      userMsg.className = 'chat-message user';
+      userMsg.textContent = text;
+      chatMessages.appendChild(userMsg);
+
+      chatInput.value = '';
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+
+      setTimeout(function () {
+        const botMsg = document.createElement('div');
+        botMsg.className = 'chat-message bot';
+        botMsg.textContent = 'Thanks for your message! We will get back to you soon.';
+        chatMessages.appendChild(botMsg);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+      }, 600);
+    });
+
+  });
+  </script>
 
 </body>
 </html>
