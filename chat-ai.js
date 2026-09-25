@@ -1,6 +1,6 @@
 /* =========================================================
-   ARTIST CHAT — AI POWERED (Pollinations AI)
-   هوش مصنوعی واقعی + تولید تصویر رایگان
+   ARTIST CHAT — AI POWERED (Multi-Service Fallback)
+   هوش مصنوعی واقعی + تولید تصویر رایگان + چند سرویس جایگزین
    ========================================================= */
 (function () {
   'use strict';
@@ -14,15 +14,9 @@
      CONFIG — تنظیمات
   ========================================================= */
   const CONFIG = {
-    // API متنی رایگان Pollinations
-    textAPI: 'https://text.pollinations.ai/openai',
-    
-    // API تصویری رایگان Pollinations
-    imageAPI: 'https://image.pollinations.ai/prompt/',
-    
     // دستور سیستمی — شخصیت دستیار
     systemPrompt: `تو "دستیار هنری" سایت Artist Portfolio هستی.
-    
+
 اطلاعات سایت:
 - نقاشی‌ها: paintings.html — مجموعه‌ای از نقاشی‌های اصیل (رنگ روغن، آبرنگ، طراحی)
 - قلم‌موها: brushes.html — مجموعه حرفه‌ای Fine Detail Professional Brush Set
@@ -30,19 +24,19 @@
 - ویدیوها: videos.html — فرآیند خلق آثار و تکنیک‌ها
 - درباره: about.html — بیوگرافی هنرمند
 - تماس: contact.html — فرم تماس و سفارش
-- کلاس‌ها: کلاس‌های آنلاین (۴۹$)، حضوری (۷۹$)، آبرنگ (۳۹$)، خصوصی (۱۲۰$)
+- کلاس‌ها: آنلاین (۴۹$)، حضوری (۷۹$)، آبرنگ (۳۹$)، خصوصی (۱۲۰$)
 
 قوانین پاسخ:
 1. به فارسی و انگلیسی هر دو جواب بده (بر اساس زبان سوال کاربر)
 2. کوتاه، دوستانه و هنری صحبت کن
 3. اگه کسی سوال درباره سایت پرسید، لینک صفحه مربوطه رو بده
-4. اگه کسی درخواست تولید تصویر کرد، بگو "در حال ساخت تصویر..." و کاربر باید دکمه 🎨 رو بزنه
+4. اگه کسی درخواست تولید تصویر کرد، بگو "دکمه 🎨 رو بزنید" یا خودت تصویر بساز
 5. از ایموجی‌های هنری استفاده کن (🎨🖌️🖼️✨)
-6. اگه سوال ربطی به سایت نداشت، بازم کمکش کن ولی در پایان اشاره کن که دستیار هنری هستی`,
+6. اگه سوال ربطی به سایت نداشت، بازم کمکش کن ولی در پایان اشاره کن که دستیار هنری هستی
+7. مختصر و مفید جواب بده (زیر ۱۵۰ کلمه)`,
 
-    // تنظیمات
     maxHistory: 10,
-    model: 'openai'
+    timeout: 20000
   };
 
   /* =========================================================
@@ -55,15 +49,77 @@
 
   const shadow = host.attachShadow({ mode: 'open' });
 
-  /* --- CSS --- */
+  /* --- CSS Link --- */
   const link = document.createElement('link');
   link.rel = 'stylesheet';
-  link.href = 'chat.css';  // اگه داخل پوشه chat/ هست: 'chat/chat.css'
+  link.href = 'chat.css'; // اگه داخل پوشه chat/ هست: 'chat/chat.css'
   link.onload = () => console.log('✅ CSS لود شد');
-  link.onerror = () => console.warn('⚠️ CSS لود نشد');
+  link.onerror = () => console.warn('⚠️ CSS لود نشد - استایل اضطراری استفاده می‌شه');
   shadow.appendChild(link);
 
-  /* --- استایل اضطراری --- */
+  /* =========================================================
+     2) HTML
+  ========================================================= */
+  const html = `
+    <button class="chat-toggle" id="chatToggle" aria-label="Open chat">
+      <span class="chat-icon-chat">🎨</span>
+      <span class="chat-icon-close" style="display:none">×</span>
+      <span class="chat-badge" id="chatBadge">1</span>
+    </button>
+
+    <div class="chat-box" id="chatBox">
+      <div class="chat-header">
+        <div class="chat-header-left">
+          <div class="chat-avatar">
+            <span>🎨</span>
+            <span class="chat-avatar-status"></span>
+          </div>
+          <div class="chat-header-meta">
+            <strong>دستیار هوشمند</strong>
+            <span class="chat-status">
+              <span class="chat-status-dot"></span>
+              <span>آنلاین — هوش مصنوعی</span>
+            </span>
+          </div>
+        </div>
+        <div class="chat-header-actions">
+          <button class="chat-action-btn" id="chatClearBtn" title="پاک کردن" aria-label="Clear">🗑</button>
+          <button class="chat-action-btn chat-close" id="chatClose" aria-label="Close">×</button>
+        </div>
+      </div>
+
+      <div class="chat-suggestions" id="chatSuggestions">
+        <button data-ask="نقاشی‌ها رو معرفی کن">🖼️ نقاشی‌ها</button>
+        <button data-ask="کلاس‌های نقاشی چیه؟">🎓 کلاس‌ها</button>
+        <button data-ask="قیمت پرینت‌ها چنده؟">🖨️ پرینت‌ها</button>
+        <button data-ask="یک نقاشی از گل رز بساز">🎨 ساخت تصویر</button>
+      </div>
+
+      <div class="chat-messages" id="chatMessages"></div>
+
+      <div class="chat-typing" id="chatTyping" hidden>
+        <div class="chat-typing-bubble">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+
+      <form class="chat-form" id="chatForm" autocomplete="off">
+        <div class="chat-input-wrap">
+          <textarea id="chatInput" placeholder="سوالت رو بنویس یا درخواست تصویر بده..." rows="1" maxlength="1000"></textarea>
+          <button type="button" class="chat-gen-btn" id="chatGenBtn" title="ساخت تصویر">🎨</button>
+          <button type="submit" class="chat-send-btn" id="chatSendBtn" aria-label="Send">➤</button>
+        </div>
+      </form>
+    </div>
+  `;
+
+  const wrapper = document.createElement('div');
+  wrapper.innerHTML = html;
+  while (wrapper.firstChild) shadow.appendChild(wrapper.firstChild);
+
+  /* =========================================================
+     3) FALLBACK STYLES
+  ========================================================= */
   const fallback = document.createElement('style');
   fallback.textContent = `
     .chat-toggle {
@@ -90,6 +146,26 @@
       transform: scale(1.08) rotate(-6deg) !important;
       background: linear-gradient(135deg, #c9a227 0%, #8b6f1a 100%) !important;
     }
+    .chat-toggle .chat-icon-close {
+      position: absolute;
+      font-size: 32px;
+    }
+    .chat-badge {
+      position: absolute !important;
+      top: -4px !important;
+      right: -4px !important;
+      background: #e63946 !important;
+      color: #fff !important;
+      font-size: 11px !important;
+      font-weight: 700 !important;
+      min-width: 22px !important;
+      height: 22px !important;
+      border-radius: 999px !important;
+      display: grid !important;
+      place-items: center !important;
+      border: 2px solid #fff !important;
+      padding: 0 5px !important;
+    }
     .chat-box {
       position: fixed !important;
       bottom: 105px !important;
@@ -108,8 +184,9 @@
       transform: translateY(40px) scale(.94) !important;
       pointer-events: none !important;
       transition: opacity .4s ease, transform .5s cubic-bezier(.2,.9,.3,1.3) !important;
-      font-family: sans-serif !important;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, sans-serif !important;
       z-index: 2147483647 !important;
+      color: #1a1410 !important;
     }
     .chat-box.open {
       opacity: 1 !important;
@@ -126,6 +203,41 @@
       border-bottom: 2px solid #c9a227 !important;
       flex-shrink: 0 !important;
     }
+    .chat-header-left { display: flex !important; align-items: center !important; gap: 12px !important; }
+    .chat-avatar {
+      position: relative !important;
+      width: 44px !important; height: 44px !important;
+      border-radius: 50% !important;
+      background: linear-gradient(135deg, #c9a227, #8b6f1a) !important;
+      display: grid !important; place-items: center !important;
+      font-size: 20px !important;
+      box-shadow: 0 0 0 3px rgba(201,162,39,0.25) !important;
+    }
+    .chat-avatar-status {
+      position: absolute !important;
+      bottom: 1px !important; right: 1px !important;
+      width: 12px !important; height: 12px !important;
+      border-radius: 50% !important;
+      background: #22c55e !important;
+      border: 2px solid #1a1410 !important;
+    }
+    .chat-header-meta strong { display: block !important; font-size: 14.5px !important; font-weight: 700 !important; color: #f4ebe0 !important; }
+    .chat-status { display: flex !important; align-items: center !important; gap: 5px !important; font-size: 11.5px !important; color: #a8e6a8 !important; margin-top: 2px !important; }
+    .chat-status-dot { width: 6px !important; height: 6px !important; border-radius: 50% !important; background: #22c55e !important; display: inline-block !important; }
+    .chat-header-actions { display: flex !important; gap: 4px !important; }
+    .chat-action-btn {
+      width: 32px !important; height: 32px !important;
+      border-radius: 50% !important;
+      border: 1px solid rgba(201,162,39,0.3) !important;
+      background: transparent !important;
+      color: #f4ebe0 !important;
+      cursor: pointer !important;
+      display: grid !important; place-items: center !important;
+      font-size: 15px !important;
+      font-family: inherit !important;
+    }
+    .chat-action-btn:hover { background: rgba(201,162,39,0.2) !important; }
+    .chat-close { font-size: 20px !important; }
     .chat-messages {
       flex: 1 !important;
       overflow-y: auto !important;
@@ -170,6 +282,14 @@
     .msg-bubble ul { margin: 6px 0 !important; padding-inline-start: 20px !important; }
     .msg-bubble li { margin-bottom: 4px !important; }
     .msg-bubble img { max-width: 100% !important; border-radius: 10px !important; margin-top: 8px !important; display: block !important; }
+    .msg-bubble code { background: rgba(0,0,0,0.08) !important; padding: 1px 6px !important; border-radius: 4px !important; font-size: 12px !important; }
+    .msg-time {
+      font-size: 10px !important;
+      color: #8b5a3c !important;
+      margin-top: 4px !important;
+      padding: 0 6px !important;
+      opacity: 0.7 !important;
+    }
     .chat-form {
       padding: 10px 12px !important;
       background: #fff !important;
@@ -197,7 +317,9 @@
       max-height: 120px !important;
       min-height: 22px !important;
       color: #1a1410 !important;
+      line-height: 1.5 !important;
     }
+    .chat-input-wrap textarea::placeholder { color: #999 !important; }
     .chat-send-btn, .chat-gen-btn {
       width: 38px !important;
       height: 38px !important;
@@ -210,6 +332,7 @@
       place-items: center !important;
       flex-shrink: 0 !important;
       font-size: 16px !important;
+      transition: all .25s !important;
     }
     .chat-gen-btn { background: #c9a227 !important; color: #1a1410 !important; }
     .chat-send-btn:hover, .chat-gen-btn:hover { transform: scale(1.08) !important; }
@@ -253,95 +376,33 @@
       cursor: pointer !important;
       white-space: nowrap !important;
       font-family: inherit !important;
+      color: #1a1410 !important;
+      transition: all .25s !important;
     }
     .chat-suggestions button:hover {
       background: #1a1410 !important;
       color: #fff !important;
     }
+    .chat-suggestions::-webkit-scrollbar { display: none !important; }
+    .chat-messages::-webkit-scrollbar { width: 6px !important; }
+    .chat-messages::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.15) !important; border-radius: 3px !important; }
+
+    @media (max-width: 480px) {
+      .chat-box {
+        right: 10px !important;
+        left: 10px !important;
+        bottom: 92px !important;
+        width: auto !important;
+        height: calc(100vh - 112px) !important;
+        max-height: none !important;
+      }
+      .chat-toggle { bottom: 18px !important; right: 18px !important; width: 60px !important; height: 60px !important; }
+    }
   `;
   shadow.appendChild(fallback);
 
   /* =========================================================
-     2) HTML
-  ========================================================= */
-  const html = `
-    <button class="chat-toggle" id="chatToggle" aria-label="Open chat">
-      <span class="chat-icon-chat">🎨</span>
-      <span class="chat-icon-close" style="display:none">×</span>
-      <span class="chat-badge" id="chatBadge" style="
-        position:absolute;top:-4px;right:-4px;
-        background:#e63946;color:#fff;font-size:11px;font-weight:700;
-        min-width:22px;height:22px;border-radius:999px;padding:0 5px;
-        display:grid;place-items:center;border:2px solid #fff;
-      ">1</span>
-    </button>
-
-    <div class="chat-box" id="chatBox">
-      <div class="chat-header">
-        <div style="display:flex;align-items:center;gap:12px">
-          <div style="
-            position:relative;width:44px;height:44px;border-radius:50%;
-            background:linear-gradient(135deg,#c9a227,#8b6f1a);
-            display:grid;place-items:center;font-size:20px;
-            box-shadow:0 0 0 3px rgba(201,162,39,0.25);
-          ">
-            <span>🎨</span>
-            <span style="
-              position:absolute;bottom:1px;right:1px;width:12px;height:12px;
-              border-radius:50%;background:#22c55e;border:2px solid #1a1410;
-            "></span>
-          </div>
-          <div>
-            <strong style="display:block;font-size:14.5px;font-weight:700;color:#f4ebe0">دستیار هوشمند</strong>
-            <span style="display:flex;align-items:center;gap:5px;font-size:11.5px;color:#a8e6a8;margin-top:2px">
-              <span style="width:6px;height:6px;border-radius:50%;background:#22c55e;display:inline-block"></span>
-              آنلاین — هوش مصنوعی
-            </span>
-          </div>
-        </div>
-        <div style="display:flex;gap:4px">
-          <button id="chatClearBtn" title="پاک کردن" style="
-            width:32px;height:32px;border-radius:50%;border:1px solid rgba(201,162,39,0.3);
-            background:transparent;color:#f4ebe0;cursor:pointer;display:grid;place-items:center;font-size:15px;
-          ">🗑</button>
-          <button id="chatClose" aria-label="Close" style="
-            width:32px;height:32px;border-radius:50%;border:1px solid rgba(201,162,39,0.3);
-            background:transparent;color:#f4ebe0;cursor:pointer;display:grid;place-items:center;font-size:20px;
-          ">×</button>
-        </div>
-      </div>
-
-      <div class="chat-suggestions" id="chatSuggestions">
-        <button data-ask="نقاشی‌ها رو معرفی کن">🖼️ نقاشی‌ها</button>
-        <button data-ask="کلاس‌های نقاشی چیه؟">🎓 کلاس‌ها</button>
-        <button data-ask="قیمت پرینت‌ها چنده؟">🖨️ پرینت‌ها</button>
-        <button data-ask="یک نقاشی از گل رز بساز">🎨 ساخت تصویر</button>
-      </div>
-
-      <div class="chat-messages" id="chatMessages"></div>
-
-      <div class="chat-typing" id="chatTyping" hidden>
-        <div class="chat-typing-bubble">
-          <span></span><span></span><span></span>
-        </div>
-      </div>
-
-      <form class="chat-form" id="chatForm" autocomplete="off">
-        <div class="chat-input-wrap">
-          <textarea id="chatInput" placeholder="سوالت رو بنویس یا درخواست تصویر بده..." rows="1" maxlength="1000"></textarea>
-          <button type="button" class="chat-gen-btn" id="chatGenBtn" title="ساخت تصویر">🎨</button>
-          <button type="submit" class="chat-send-btn" id="chatSendBtn" aria-label="Send">➤</button>
-        </div>
-      </form>
-    </div>
-  `;
-
-  const wrapper = document.createElement('div');
-  wrapper.innerHTML = html;
-  while (wrapper.firstChild) shadow.appendChild(wrapper.firstChild);
-
-  /* =========================================================
-     3) LOGIC
+     4) LOGIC
   ========================================================= */
   const $ = id => shadow.getElementById(id);
   const chatToggle = $('chatToggle');
@@ -356,9 +417,13 @@
   const chatClearBtn = $('chatClearBtn');
   const chatGenBtn = $('chatGenBtn');
 
-  if (!chatToggle || !chatBox) return;
+  if (!chatToggle || !chatBox) {
+    console.error('❌ عناصر اصلی چت پیدا نشد');
+    return;
+  }
+  console.log('✅ همه عناصر پیدا شدند');
 
-  // تاریخچه مکالمه برای AI
+  // تاریخچه مکالمه
   let conversationHistory = [
     { role: 'system', content: CONFIG.systemPrompt }
   ];
@@ -375,7 +440,7 @@
 
   function addMessage(text, sender, isHTML) {
     const wrap = document.createElement('div');
-    wrap.className = 'chat-message ' + sender;
+    wrap.className = 'chat-message ' + (sender || 'bot');
     const bubble = document.createElement('div');
     bubble.className = 'msg-bubble';
     if (isHTML) bubble.innerHTML = text;
@@ -383,7 +448,6 @@
     const time = document.createElement('span');
     time.className = 'msg-time';
     time.textContent = timeNow();
-    time.style.cssText = 'font-size:10px;color:#8b5a3c;margin-top:4px;padding:0 6px;opacity:0.7';
     wrap.appendChild(bubble);
     wrap.appendChild(time);
     chatMessages.appendChild(wrap);
@@ -397,55 +461,161 @@
   }
 
   /* =========================================================
-     4) AI TEXT — Pollinations API
+     5) MULTI-SERVICE AI TEXT
   ========================================================= */
-  async function askAI(userMessage) {
-    // اضافه به تاریخچه
-    conversationHistory.push({ role: 'user', content: userMessage });
+  
+  // سرویس ۱: Pollinations POST
+  async function askPollinationsPOST(messages) {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), CONFIG.timeout);
     
+    try {
+      const res = await fetch('https://text.pollinations.ai/openai', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: 'openai',
+          messages: messages,
+          temperature: 0.7,
+          max_tokens: 500
+        }),
+        signal: controller.signal
+      });
+      clearTimeout(timeoutId);
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const data = await res.json();
+      const reply = data.choices?.[0]?.message?.content;
+      if (!reply) throw new Error('empty reply');
+      return reply;
+    } catch (e) {
+      clearTimeout(timeoutId);
+      throw e;
+    }
+  }
+
+  // سرویس ۲: Pollinations GET
+  async function askPollinationsGET(messages) {
+    const lastUser = messages.filter(m => m.role === 'user').pop();
+    const sys = messages.find(m => m.role === 'system');
+    const prompt = encodeURIComponent(
+      (sys ? sys.content + '\n\n---\n\n' : '') + (lastUser ? lastUser.content : 'سلام')
+    );
+    const url = `https://text.pollinations.ai/${prompt}?model=openai`;
+    
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), CONFIG.timeout);
+    
+    try {
+      const res = await fetch(url, {
+        method: 'GET',
+        signal: controller.signal
+      });
+      clearTimeout(timeoutId);
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const text = await res.text();
+      if (!text || text.length < 2) throw new Error('empty reply');
+      return text;
+    } catch (e) {
+      clearTimeout(timeoutId);
+      throw e;
+    }
+  }
+
+  // سرویس ۳: Hugging Face (Mistral)
+  async function askHuggingFace(messages) {
+    const lastUser = messages.filter(m => m.role === 'user').pop();
+    const url = 'https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.2';
+    
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), CONFIG.timeout);
+    
+    try {
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          inputs: lastUser ? lastUser.content : 'سلام',
+          parameters: { max_new_tokens: 400, temperature: 0.7 }
+        }),
+        signal: controller.signal
+      });
+      clearTimeout(timeoutId);
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const data = await res.json();
+      if (Array.isArray(data) && data[0]?.generated_text) {
+        return data[0].generated_text;
+      }
+      throw new Error('bad format');
+    } catch (e) {
+      clearTimeout(timeoutId);
+      throw e;
+    }
+  }
+
+  // سرویس ۴: Groq-like via Pollinations (fallback)
+  async function askGroqProxy(messages) {
+    const lastUser = messages.filter(m => m.role === 'user').pop();
+    const url = `https://text.pollinations.ai/${encodeURIComponent(lastUser ? lastUser.content : 'سلام')}?model=openai-fast`;
+    
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), CONFIG.timeout);
+    
+    try {
+      const res = await fetch(url, { method: 'GET', signal: controller.signal });
+      clearTimeout(timeoutId);
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const text = await res.text();
+      if (!text || text.length < 2) throw new Error('empty');
+      return text;
+    } catch (e) {
+      clearTimeout(timeoutId);
+      throw e;
+    }
+  }
+
+  // تابع اصلی: امتحان همه سرویس‌ها به ترتیب
+  async function askAI(userMessage) {
+    conversationHistory.push({ role: 'user', content: userMessage });
+
     // محدود کردن تاریخچه
     if (conversationHistory.length > CONFIG.maxHistory * 2 + 1) {
       conversationHistory = [
-        conversationHistory[0], // system prompt
+        conversationHistory[0],
         ...conversationHistory.slice(-CONFIG.maxHistory * 2)
       ];
     }
 
-    try {
-      const response = await fetch(CONFIG.textAPI, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          model: CONFIG.model,
-          messages: conversationHistory,
-          temperature: 0.7,
-          max_tokens: 500
-        })
-      });
+    const services = [
+      { name: 'Pollinations-POST', fn: askPollinationsPOST },
+      { name: 'Pollinations-GET', fn: askPollinationsGET },
+      { name: 'Groq-Proxy', fn: askGroqProxy },
+      { name: 'HuggingFace', fn: askHuggingFace }
+    ];
 
-      if (!response.ok) throw new Error('API error: ' + response.status);
-
-      const data = await response.json();
-      const aiReply = data.choices?.[0]?.message?.content || 'متوجه نشدم، لطفاً دوباره بپرسید.';
-
-      // اضافه به تاریخچه
-      conversationHistory.push({ role: 'assistant', content: aiReply });
-
-      return aiReply;
-    } catch (err) {
-      console.error('❌ AI error:', err);
-      return 'متأسفم، در ارتباط با هوش مصنوعی مشکلی پیش آمد. لطفاً دوباره تلاش کنید. 🙏';
+    for (const service of services) {
+      try {
+        console.log('🔄 تلاش با:', service.name);
+        const reply = await service.fn(conversationHistory);
+        if (reply && reply.length > 0) {
+          console.log('✅ پاسخ از:', service.name);
+          conversationHistory.push({ role: 'assistant', content: reply });
+          return reply;
+        }
+      } catch (e) {
+        console.warn('❌', service.name, 'خطا:', e.message);
+      }
     }
+
+    // همه fail شدند
+    return 'متأسفم، در حال حاضر نمی‌تونم به هوش مصنوعی وصل بشم. 🙏<br><br>لطفاً:<ul><li>فیلترشکن رو چک کنید</li><li>چند دقیقه دیگه دوباره تلاش کنید</li><li>یا با <a href="contact.html">Contact</a> تماس بگیرید</li></ul>';
   }
 
   /* =========================================================
-     5) AI IMAGE — Pollinations Image API
+     6) AI IMAGE GENERATION
   ========================================================= */
   async function generateImage(prompt) {
-    // پیام کاربر
     addMessage('🎨 در حال ساخت تصویر: ' + escapeHtml(prompt), 'user');
 
-    // کارت لودینگ
     const loadingBubble = addMessage(`
       <div style="text-align:center;padding:15px">
         <div style="
@@ -460,26 +630,48 @@
     `, 'bot', true);
 
     try {
-      // ساخت URL تصویر
-      const encodedPrompt = encodeURIComponent(prompt + ', oil painting style, artistic, masterpiece, high quality');
-      const imageURL = `${CONFIG.imageAPI}${encodedPrompt}?width=1024&height=1024&nologo=true&seed=${Math.floor(Math.random() * 1000000)}`;
+      const encodedPrompt = encodeURIComponent(
+        prompt + ', oil painting style, artistic, masterpiece, high quality, detailed'
+      );
+      
+      const seed = Math.floor(Math.random() * 1000000);
+      const imageServices = [
+        `https://image.pollinations.ai/prompt/${encodedPrompt}?width=1024&height=1024&nologo=true&seed=${seed}`,
+        `https://image.pollinations.ai/prompt/${encodedPrompt}?width=768&height=768&nologo=true&seed=${seed}`,
+        `https://image.pollinations.ai/prompt/${encodedPrompt}?seed=${seed}`
+      ];
 
-      // تست لود تصویر
-      const testImg = new Image();
-      testImg.crossOrigin = 'anonymous';
+      let imageURL = null;
+      
+      for (const url of imageServices) {
+        try {
+          console.log('🔄 تلاش تصویر...');
+          const testImg = new Image();
+          testImg.crossOrigin = 'anonymous';
+          
+          await new Promise((resolve, reject) => {
+            const timeout = setTimeout(() => reject(new Error('timeout')), 35000);
+            testImg.onload = () => { clearTimeout(timeout); resolve(); };
+            testImg.onerror = () => { clearTimeout(timeout); reject(new Error('failed')); };
+            testImg.src = url;
+          });
+          
+          imageURL = url;
+          console.log('✅ تصویر ساخته شد');
+          break;
+        } catch (e) {
+          console.warn('❌ این سرویس کار نکرد:', e.message);
+        }
+      }
 
-      await new Promise((resolve, reject) => {
-        const timeout = setTimeout(() => reject(new Error('timeout')), 45000);
-        testImg.onload = () => { clearTimeout(timeout); resolve(); };
-        testImg.onerror = () => { clearTimeout(timeout); reject(new Error('load failed')); };
-        testImg.src = imageURL;
-      });
-
-      // حذف کارت لودینگ
       loadingBubble.parentElement.remove();
 
-      // نمایش تصویر
-      const imgBubble = addMessage(`
+      if (!imageURL) {
+        addMessage('❌ متأسفم، ساخت تصویر با خطا مواجه شد.<br><br>لطفاً:<ul><li>فیلترشکن رو چک کنید</li><li>درخواست رو ساده‌تر بنویسید</li><li>دوباره تلاش کنید</li></ul>', 'bot', true);
+        return;
+      }
+
+      addMessage(`
         🎨 <strong>تصویر ساخته شد!</strong>
         <div style="margin-top:10px;border-radius:12px;overflow:hidden;box-shadow:0 4px 15px rgba(0,0,0,0.15)">
           <img src="${imageURL}" alt="${escapeHtml(prompt)}" style="width:100%;display:block" />
@@ -488,11 +680,13 @@
           <button onclick="window.open('${imageURL}','_blank')" style="
             flex:1;background:#1a1410;color:#fff;border:none;
             padding:8px;border-radius:8px;cursor:pointer;font-size:12px;
+            font-family:inherit;
           ">🔍 بزرگ‌نمایی</button>
           <a href="${imageURL}" download="artist-ai-${Date.now()}.jpg" target="_blank" style="
             flex:1;background:#c9a227;color:#1a1410;border:none;
             padding:8px;border-radius:8px;cursor:pointer;font-size:12px;
             text-align:center;text-decoration:none;font-weight:600;
+            font-family:inherit;
           ">⬇ دانلود</a>
         </div>
       `, 'bot', true);
@@ -500,12 +694,12 @@
     } catch (err) {
       console.error('❌ Image error:', err);
       loadingBubble.parentElement.remove();
-      addMessage('❌ متأسفم، ساخت تصویر با خطا مواجه شد. لطفاً دوباره تلاش کنید یا درخواست رو ساده‌تر بنویسید. 🎨', 'bot');
+      addMessage('❌ متأسفم، ساخت تصویر با خطا مواجه شد. لطفاً دوباره تلاش کنید.', 'bot');
     }
   }
 
   /* =========================================================
-     6) SEND MESSAGE
+     7) SEND MESSAGE
   ========================================================= */
   async function sendMessage(text, isImageRequest) {
     if (!text || !text.trim()) return;
@@ -514,12 +708,10 @@
     chatInput.value = '';
     chatInput.style.height = 'auto';
 
-    // چک کن آیا درخواست تصویره
     const imageKeywords = /بساز|بکش|تولید کن|رسم کن|تصویر.*بساز|عکس.*بساز|generate|create.*image|draw|paint/i;
     const isImage = isImageRequest || imageKeywords.test(text);
 
     if (isImage) {
-      // حذف کلمات درخواست از پرامپت
       const cleanPrompt = text
         .replace(/بساز|بکش|تولید کن|رسم کن|generate|create|draw|paint/gi, '')
         .replace(/یک|یه|یه عکس|یک تصویر|image|picture/gi, '')
@@ -529,7 +721,6 @@
       return;
     }
 
-    // سوال متنی → AI
     showTyping(true);
     const reply = await askAI(text);
     showTyping(false);
@@ -537,7 +728,7 @@
   }
 
   /* =========================================================
-     7) EVENTS
+     8) EVENTS
   ========================================================= */
   chatForm.addEventListener('submit', function (e) {
     e.preventDefault();
@@ -556,7 +747,6 @@
     chatInput.style.height = Math.min(chatInput.scrollHeight, 120) + 'px';
   });
 
-  // دکمه تولید تصویر
   if (chatGenBtn) {
     chatGenBtn.addEventListener('click', function () {
       const text = chatInput.value.trim();
@@ -569,73 +759,12 @@
     });
   }
 
-  // پیشنهادات
   if (suggestions) {
     suggestions.addEventListener('click', function (e) {
       const btn = e.target.closest('button');
       if (!btn) return;
-      const ask = btn.dataset.ask || btn.textContent;
-      sendMessage(ask);
+      sendMessage(btn.dataset.ask || btn.textContent);
     });
   }
 
-  // باز/بسته
-  chatToggle.addEventListener('click', function () {
-    const isOpen = chatBox.classList.toggle('open');
-    const iconChat = chatToggle.querySelector('.chat-icon-chat');
-    const iconClose = chatToggle.querySelector('.chat-icon-close');
-    if (iconChat && iconClose) {
-      iconChat.style.display = isOpen ? 'none' : 'inline';
-      iconClose.style.display = isOpen ? 'inline' : 'none';
-    }
-    if (isOpen) {
-      if (chatBadge) chatBadge.style.display = 'none';
-      setTimeout(function () { chatInput.focus(); }, 300);
-    }
-  });
-
-  chatClose.addEventListener('click', function () {
-    chatBox.classList.remove('open');
-    const iconChat = chatToggle.querySelector('.chat-icon-chat');
-    const iconClose = chatToggle.querySelector('.chat-icon-close');
-    if (iconChat && iconClose) {
-      iconChat.style.display = 'inline';
-      iconClose.style.display = 'none';
-    }
-  });
-
-  // پاک کردن
-  if (chatClearBtn) {
-    chatClearBtn.addEventListener('click', function () {
-      if (!confirm('تاریخچه چت پاک بشه؟')) return;
-      chatMessages.innerHTML = '';
-      conversationHistory = [{ role: 'system', content: CONFIG.systemPrompt }];
-      addMessage('تاریخچه پاک شد. چطور می‌تونم کمکتون کنم؟ 😊', 'bot');
-    });
-  }
-
-  /* =========================================================
-     8) WELCOME
-  ========================================================= */
-  addMessage(`
-    سلام! 👋 من <strong>دستیار هوشمند هنری</strong> شما هستم.
-    <br><br>
-    می‌تونم:
-    <ul>
-      <li>💬 به هر سوالی جواب بدم</li>
-      <li>🎨 براتون تصویر بسازم</li>
-      <li>🖼️ درباره نقاشی‌ها، کلاس‌ها، پرینت‌ها راهنمایی کنم</li>
-    </ul>
-    <br>
-    <em>مثلاً بپرسید: «یک نقاشی از غروب بساز» 🎨</em>
-  `, 'bot', true);
-
-  setTimeout(function () {
-    if (!chatBox.classList.contains('open') && chatBadge) {
-      chatBadge.style.display = 'grid';
-    }
-  }, 4000);
-
-  console.log('✅ چت هوشمند با AI راه‌اندازی شد');
-
-})();
+  chatToggle
