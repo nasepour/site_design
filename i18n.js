@@ -109,26 +109,6 @@ async function setLanguage(lang) {
 }
 
 /* -----------------------------------------
-   راه‌اندازی اولیه
------------------------------------------ */
-document.addEventListener('DOMContentLoaded', () => {
-  // زبان ذخیره‌شده یا زبان مرورگر
-  const savedLang =
-    localStorage.getItem('siteLang') ||
-    (navigator.language.startsWith('fa') ? 'fa' : DEFAULT_LANG);
-
-  setLanguage(savedLang);
-
-  // کلیک روی دکمه‌های زبان
-  document.querySelectorAll('.lang-btn').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.preventDefault();
-      const lang = btn.dataset.lang;
-      if (lang) setLanguage(lang);
-    });
-  });
-});
-/* -----------------------------------------
    فعال‌سازی انیمیشن reveal هنگام اسکرول
 ----------------------------------------- */
 function setupRevealAnimation() {
@@ -150,6 +130,26 @@ function setupRevealAnimation() {
   revealElements.forEach(el => observer.observe(el));
 }
 
+/* -----------------------------------------
+   راه‌اندازی اولیه
+----------------------------------------- */
 document.addEventListener('DOMContentLoaded', () => {
+  // زبان ذخیره‌شده یا زبان مرورگر
+  const savedLang =
+    localStorage.getItem('siteLang') ||
+    (navigator.language.startsWith('fa') ? 'fa' : DEFAULT_LANG);
+
+  setLanguage(savedLang);
+
+  // کلیک روی دکمه‌های زبان
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const lang = btn.dataset.lang;
+      if (lang) setLanguage(lang);
+    });
+  });
+
+  // انیمیشن reveal
   setupRevealAnimation();
 });
