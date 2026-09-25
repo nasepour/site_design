@@ -489,41 +489,6 @@
 
   </footer>
   
-  <!-- =========================
-       CHAT BOX
-  ========================== -->
-  <button class="chat-toggle" id="chatToggle" aria-label="Open chat">
-    💬
-  </button>
-
-  <div class="chat-box" id="chatBox">
-    <div class="chat-header">
-      <div>
-        <strong data-lang-key="chat_title">Artist Support</strong>
-        <span class="chat-status" data-lang-key="chat_status">● Online</span>
-      </div>
-      <button class="chat-close" id="chatClose" aria-label="Close chat">×</button>
-    </div>
-
-    <div class="chat-messages" id="chatMessages">
-      <div class="chat-message bot" data-lang-key="chat_welcome">
-        Hi! 👋 Welcome to Artist Portfolio. How can I help you today?
-      </div>
-    </div>
-
-    <form class="chat-form" id="chatForm">
-      <input
-        type="text"
-        id="chatInput"
-        data-lang-key="chat_placeholder"
-        placeholder="Type your message..."
-        autocomplete="off"
-        required
-      />
-      <button type="submit" aria-label="Send">➤</button>
-    </form>
-  </div>
-
     <!-- =========================
        FLOATING CTA
   ========================== -->
@@ -640,55 +605,6 @@
   </section>     <!-- بستن classes-section -->
         </div>       <!-- بستن classes-grid -->
   </section>     <!-- بستن classes-section -->
-
-  <!-- =========================
-       CHAT BOX SCRIPT
-  ========================== -->
-  <script>
-  document.addEventListener('DOMContentLoaded', function () {
-
-    const chatToggle   = document.getElementById('chatToggle');
-    const chatBox      = document.getElementById('chatBox');
-    const chatClose    = document.getElementById('chatClose');
-    const chatForm     = document.getElementById('chatForm');
-    const chatInput    = document.getElementById('chatInput');
-    const chatMessages = document.getElementById('chatMessages');
-
-    if (!chatToggle || !chatBox) return;
-
-    chatToggle.addEventListener('click', function () {
-      chatBox.classList.toggle('open');
-    });
-
-    chatClose.addEventListener('click', function () {
-      chatBox.classList.remove('open');
-    });
-
-    chatForm.addEventListener('submit', function (e) {
-      e.preventDefault();
-
-      const text = chatInput.value.trim();
-      if (!text) return;
-
-      const userMsg = document.createElement('div');
-      userMsg.className = 'chat-message user';
-      userMsg.textContent = text;
-      chatMessages.appendChild(userMsg);
-
-      chatInput.value = '';
-      chatMessages.scrollTop = chatMessages.scrollHeight;
-
-      setTimeout(function () {
-        const botMsg = document.createElement('div');
-        botMsg.className = 'chat-message bot';
-        botMsg.textContent = 'Thanks for your message! We will get back to you soon.';
-        chatMessages.appendChild(botMsg);
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-      }, 600);
-    });
-
-  });
-  </script>
 
 </body>
 </html>
