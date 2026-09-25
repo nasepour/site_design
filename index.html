@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -7,14 +6,14 @@
 
   <title>Artist Portfolio</title>
 
-<meta
- name="description"
- content="A modern responsive artist portfolio and gallery website."
-/>
+  <meta
+    name="description"
+    content="A modern responsive artist portfolio and gallery website."
+  />
 
-    <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css" />
   <script defer src="i18n.js"></script>
-  <script defer src="chat-ai.js"></script>
+  <script defer src="chat-final-v3.js"></script>
 </head>
 
 <body>
@@ -22,22 +21,42 @@
   <!-- =========================
        HEADER
   ========================== -->
-
   <header class="header" id="home">
     <div class="header-container">
 
-
       <div class="lang-switcher">
-    <button class="lang-btn active" data-lang="en">EN</button>
-    <button class="lang-btn" data-lang="fa">FA</button>
-  </div>
+        <button class="lang-btn active" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="fa">FA</button>
+      </div>
 
-  <a href="#home" class="logo">
-    <span class="logo-main">ARTIST</span>
-    <span class="logo-sub">PORTFOLIO</span>
-  </a>
+      <a href="#home" class="logo">
+        <span class="logo-main">ARTIST</span>
+        <span class="logo-sub">PORTFOLIO</span>
+      </a>
 
-  <nav class="desktop-nav">
+      <nav class="desktop-nav">
+        <a href="paintings.html" data-lang-key="nav_paintings">Paintings</a>
+        <a href="brushes.html" data-lang-key="nav_brushes">Brushes</a>
+        <a href="prints.html" data-lang-key="nav_prints">Prints</a>
+        <a href="videos.html" data-lang-key="nav_videos">Videos</a>
+        <a href="about.html" data-lang-key="nav_about">About</a>
+        <a href="contact.html" data-lang-key="nav_contact">Contact</a>
+      </nav>
+
+      <button
+        class="menu-toggle"
+        aria-label="Open menu"
+        aria-expanded="false"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+    </div>
+
+    <!-- Mobile Menu -->
+    <nav class="mobile-nav">
       <a href="paintings.html" data-lang-key="nav_paintings">Paintings</a>
       <a href="brushes.html" data-lang-key="nav_brushes">Brushes</a>
       <a href="prints.html" data-lang-key="nav_prints">Prints</a>
@@ -46,451 +65,359 @@
       <a href="contact.html" data-lang-key="nav_contact">Contact</a>
     </nav>
 
-  <button
-    class="menu-toggle"
-    aria-label="Open menu"
-    aria-expanded="false"
-  >
-    <span></span>
-    <span></span>
-    <span></span>
-  </button>
-
-</div>
-
-<!-- Mobile Menu -->
-    <nav class="mobile-nav">
-    <a href="paintings.html" data-lang-key="nav_paintings">Paintings</a>
-    <a href="brushes.html" data-lang-key="nav_brushes">Brushes</a>
-    <a href="prints.html" data-lang-key="nav_prints">Prints</a>
-    <a href="videos.html" data-lang-key="nav_videos">Videos</a>
-    <a href="about.html" data-lang-key="nav_about">About</a>
-    <a href="contact.html" data-lang-key="nav_contact">Contact</a>
-  </nav>
-
-
   </header>
 
   <!-- =========================
        HERO
   ========================== -->
-
   <section class="hero">
 
+    <div
+      class="hero-bg"
+      style="background-image: url('hero.jpg');"
+    ></div>
 
-<div
-  class="hero-bg"
-  style="background-image: url('hero.jpg');"
-></div>
+    <div class="hero-overlay"></div>
 
-<div class="hero-overlay"></div>
+    <div class="hero-content">
 
-<div class="hero-content">
+      <p class="eyebrow" data-lang-key="hero_eyebrow">CONTEMPORARY ART</p>
 
-  <p class="eyebrow" data-lang-key="hero_eyebrow">CONTEMPORARY ART</p>
+      <h1>
+        <span data-lang-key="hero_title_line1">THE ART OF</span>
+        <br />
+        <span data-lang-key="hero_title_line2">OBSERVATION</span>
+      </h1>
 
-  <h1>
-    <span data-lang-key="hero_title_line1">THE ART OF</span>
-    <br />
-    <span data-lang-key="hero_title_line2">OBSERVATION</span>
-  </h1>
+      <a href="paintings.html" class="button button-light" data-lang-key="hero_button">
+        Explore Collection
+      </a>
 
-  <a href="paintings.html" class="button button-light" data-lang-key="hero_button">
-    Explore Collection
-  </a>
+    </div>
 
-</div>
-
-<div class="scroll-indicator">
-  <span data-lang-key="hero_scroll">SCROLL</span>
-  <div></div>
-</div>
-
+    <div class="scroll-indicator">
+      <span data-lang-key="hero_scroll">SCROLL</span>
+      <div></div>
+    </div>
 
   </section>
 
   <!-- =========================
        INTRO
   ========================== -->
-
   <section class="intro section-padding">
 
+    <div class="intro-content reveal">
 
-<div class="intro-content reveal">
+      <p class="eyebrow dark" data-lang-key="intro_eyebrow">THE COLLECTION</p>
 
-  <p class="eyebrow dark" data-lang-key="intro_eyebrow">THE COLLECTION</p>
+      <h2>
+        <span data-lang-key="intro_title_1">Paintings created with</span>
+        <em data-lang-key="intro_title_em">patience, observation</em>
+        <span data-lang-key="intro_title_2">and attention to detail.</span>
+      </h2>
 
-  <h2>
-    <span data-lang-key="intro_title_1">Paintings created with</span>
-    <em data-lang-key="intro_title_em">patience, observation</em>
-    <span data-lang-key="intro_title_2">and attention to detail.</span>
-  </h2>
+      <p class="intro-text" data-lang-key="intro_text">
+        Explore a collection of original works, prints and artistic
+        resources. Replace every image in this template with your own
+        artwork and customize the text to create your personal portfolio.
+      </p>
 
-  <p class="intro-text" data-lang-key="intro_text">
-    Explore a collection of original works, prints and artistic
-    resources. Replace every image in this template with your own
-    artwork and customize the text to create your personal portfolio.
-  </p>
-
-</div>
-
+    </div>
 
   </section>
 
   <!-- =========================
        PAINTINGS
   ========================== -->
+  <section class="feature-section" id="paintings">
 
-  <section
-    class="feature-section"
-    id="paintings"
-  >
+    <div class="feature-image reveal">
+      <img
+        src="paintings.jpg"
+        alt="Paintings collection"
+      />
+    </div>
 
+    <div class="feature-content reveal">
 
-<div class="feature-image reveal">
+      <p class="eyebrow dark" data-lang-key="paintings_eyebrow">01 / COLLECTION</p>
 
-  <!-- Change image here -->
-  <img
-    src="paintings.jpg"
-    alt="Paintings collection"
-  />
+      <h2 data-lang-key="paintings_title">Paintings</h2>
 
-</div>
+      <p data-lang-key="paintings_text">
+        Discover original paintings and explore the complete collection
+        of available artwork.
+      </p>
 
-<div class="feature-content reveal">
+      <a href="paintings.html" class="text-link">
+        <span data-lang-key="paintings_link">Discover the collection</span>
+        <span>→</span>
+      </a>
 
-  <p class="eyebrow dark" data-lang-key="paintings_eyebrow">01 / COLLECTION</p>
-
-  <h2 data-lang-key="paintings_title">Paintings</h2>
-
-  <p data-lang-key="paintings_text">
-    Discover original paintings and explore the complete collection
-    of available artwork.
-  </p>
-
-  <a href="paintings.html" class="text-link">
-    <span data-lang-key="paintings_link">Discover the collection</span>
-    <span>→</span>
-  </a>
-
-</div>
-
+    </div>
 
   </section>
 
   <!-- =========================
        BRUSHES
   ========================== -->
+  <section class="feature-section reverse" id="brushes">
 
-  <section
-    class="feature-section reverse"
-    id="brushes"
-  >
+    <div class="feature-image reveal">
+      <img
+        src="brushes.jpg"
+        alt="Professional brushes"
+      />
+    </div>
 
+    <div class="feature-content reveal">
 
-<div class="feature-image reveal">
+      <p class="eyebrow dark" data-lang-key="brushes_eyebrow">02 / TOOLS</p>
 
-  <!-- Change image here -->
-  <img
-    src="brushes.jpg"
-    alt="Professional brushes"
-  />
+      <h2 data-lang-key="brushes_title">Brushes</h2>
 
-</div>
+      <h3 data-lang-key="brushes_subtitle">Fine Detail Professional Brush Set</h3>
 
-<div class="feature-content reveal">
+      <p data-lang-key="brushes_text">
+        A carefully selected collection of brushes designed for precision,
+        detail and artistic control.
+      </p>
 
-    <p class="eyebrow dark" data-lang-key="brushes_eyebrow">02 / TOOLS</p>
+      <a href="brushes.html" class="text-link">
+        <span data-lang-key="brushes_link">Discover the brushes</span>
+        <span>→</span>
+      </a>
 
-  <h2 data-lang-key="brushes_title">Brushes</h2>
-
-  <h3 data-lang-key="brushes_subtitle">Fine Detail Professional Brush Set</h3>
-
-  <p data-lang-key="brushes_text">
-    A carefully selected collection of brushes designed for precision,
-    detail and artistic control.
-  </p>
-
-  <a href="brushes.html" class="text-link">
-    <span data-lang-key="brushes_link">Discover the brushes</span>
-    <span>→</span>
-  </a>
-
-</div>
-
+    </div>
 
   </section>
 
   <!-- =========================
        PRINTS
   ========================== -->
+  <section class="full-image-section" id="prints">
 
-  <section
-    class="full-image-section"
-    id="prints"
-  >
+    <div
+      class="full-image-bg"
+      style="background-image: url('prints.jpg');"
+    ></div>
 
+    <div class="full-image-overlay"></div>
 
-<div
-  class="full-image-bg"
-  style="background-image: url('prints.jpg');"
-></div>
+    <div class="full-image-content reveal">
 
-<div class="full-image-overlay"></div>
+      <p class="eyebrow" data-lang-key="prints_eyebrow">03 / LIMITED EDITION</p>
 
-<div class="full-image-content reveal">
+      <h2 data-lang-key="prints_title">Prints</h2>
 
-  <p class="eyebrow" data-lang-key="prints_eyebrow">03 / LIMITED EDITION</p>
+      <p data-lang-key="prints_text">
+        Purchase your limited edition print.
+        <br />
+        Invest and enjoy.
+      </p>
 
-  <h2 data-lang-key="prints_title">Prints</h2>
+      <a href="prints.html" class="button button-light" data-lang-key="prints_button">
+        View Prints
+      </a>
 
-  <p data-lang-key="prints_text">
-    Purchase your limited edition print.
-    <br />
-    Invest and enjoy.
-  </p>
-
-  <a href="prints.html" class="button button-light" data-lang-key="prints_button">
-    View Prints
-  </a>
-
-</div>
-
+    </div>
 
   </section>
 
+  <!-- =========================
+       VIDEOS
+  ========================== -->
+  <section class="feature-section" id="videos">
 
-<!-- =========================
-     VIDEOS
-========================== -->
-
-<section
-  class="feature-section"
-  id="videos"
->
-
-  <div
-    class="feature-image video-feature reveal"
-    data-video="video-01.mp4"
-  >
-
-    <!-- Video 01 thumbnail -->
-    <img
-      src="video-01.jpg"
-      alt="Video 01"
-    />
-
-    <button
-      class="play-button"
-      type="button"
-      data-lang-key="videos_play"
-      aria-label="Play Video 01"
+    <div
+      class="feature-image video-feature reveal"
+      data-video="video-01.mp4"
     >
-      <span>▶</span>
-    </button>
-
-  </div>
-
-
-  <div class="feature-content reveal">
-
-    <p class="eyebrow dark" data-lang-key="videos_eyebrow">04 / PROCESS</p>
-
-    <h2 data-lang-key="videos_title">Videos</h2>
-
-    <p data-lang-key="videos_text">
-      Watch videos and learn more about the creative process,
-      techniques and ideas behind each artwork.
-    </p>
-
-    <a href="videos.html" class="text-link">
-      <span data-lang-key="videos_link">Watch videos</span>
-      <span>→</span>
-    </a>
-
-  </div>
-
-</section>
-
-
-<!-- =========================
-     VIDEO MODAL
-========================== -->
-
-<div class="video-modal" id="videoModal">
-
-  <div class="video-modal-backdrop"></div>
-
-  <div class="video-modal-content">
-
-    <button
-      class="video-modal-close"
-      id="videoModalClose"
-      type="button"
-      aria-label="Close video"
-    >
-      ×
-    </button>
-
-    <video
-      id="modalVideo"
-      controls
-      playsinline
-    >
-      <source
-        id="modalVideoSource"
-        src=""
-        type="video/mp4"
+      <img
+        src="video-01.jpg"
+        alt="Video 01"
       />
 
-      Your browser does not support HTML5 video.
-    </video>
+      <button
+        class="play-button"
+        type="button"
+        data-lang-key="videos_play"
+        aria-label="Play Video 01"
+      >
+        <span>▶</span>
+      </button>
+
+    </div>
+
+    <div class="feature-content reveal">
+
+      <p class="eyebrow dark" data-lang-key="videos_eyebrow">04 / PROCESS</p>
+
+      <h2 data-lang-key="videos_title">Videos</h2>
+
+      <p data-lang-key="videos_text">
+        Watch videos and learn more about the creative process,
+        techniques and ideas behind each artwork.
+      </p>
+
+      <a href="videos.html" class="text-link">
+        <span data-lang-key="videos_link">Watch videos</span>
+        <span>→</span>
+      </a>
+
+    </div>
+
+  </section>
+
+  <!-- =========================
+       VIDEO MODAL
+  ========================== -->
+  <div class="video-modal" id="videoModal">
+
+    <div class="video-modal-backdrop"></div>
+
+    <div class="video-modal-content">
+
+      <button
+        class="video-modal-close"
+        id="videoModalClose"
+        type="button"
+        aria-label="Close video"
+      >
+        ×
+      </button>
+
+      <video
+        id="modalVideo"
+        controls
+        playsinline
+      >
+        <source
+          id="modalVideoSource"
+          src=""
+          type="video/mp4"
+        />
+
+        Your browser does not support HTML5 video.
+      </video>
+
+    </div>
 
   </div>
-
-</div>
-
-
 
   <!-- =========================
        PRESS
   ========================== -->
-
   <section class="press-section section-padding">
 
+    <div class="section-heading reveal">
+      <p class="eyebrow dark" data-lang-key="press_eyebrow">FEATURED IN</p>
+      <h2 data-lang-key="press_title">Press</h2>
+    </div>
 
-<div class="section-heading reveal">
+    <div class="press-grid">
 
-  <p class="eyebrow dark" data-lang-key="press_eyebrow">FEATURED IN</p>
+      <div class="press-card reveal">
+        <img src="press-1.jpg" alt="Press feature 1" />
+      </div>
 
-  <h2 data-lang-key="press_title">Press</h2>
+      <div class="press-card reveal">
+        <img src="press-2.jpg" alt="Press feature 2" />
+      </div>
 
-</div>
+      <div class="press-card reveal">
+        <img src="press-3.jpg" alt="Press feature 3" />
+      </div>
 
-<div class="press-grid">
+      <div class="press-card reveal">
+        <img src="press-4.jpg" alt="Press feature 4" />
+      </div>
 
-  <div class="press-card reveal">
-    <img
-      src="press-1.jpg"
-      alt="Press feature 1"
-    />
-  </div>
-
-  <div class="press-card reveal">
-    <img
-      src="press-2.jpg"
-      alt="Press feature 2"
-    />
-  </div>
-
-  <div class="press-card reveal">
-    <img
-      src="press-3.jpg"
-      alt="Press feature 3"
-    />
-  </div>
-
-  <div class="press-card reveal">
-    <img
-      src="press-4.jpg"
-      alt="Press feature 4"
-    />
-  </div>
-
-</div>
-
+    </div>
 
   </section>
 
   <!-- =========================
        NEWSLETTER
   ========================== -->
+  <section class="newsletter" id="newsletter">
 
-  <section
-    class="newsletter"
-    id="newsletter"
-  >
+    <div class="newsletter-content reveal">
 
+      <p class="eyebrow" data-lang-key="newsletter_eyebrow">STAY CONNECTED</p>
 
-<div class="newsletter-content reveal">
+      <h2 data-lang-key="newsletter_title">Newsletter</h2>
 
-  <p class="eyebrow" data-lang-key="newsletter_eyebrow">STAY CONNECTED</p>
+      <p data-lang-key="newsletter_text">
+        Subscribe now to receive news about:
+      </p>
 
-  <h2 data-lang-key="newsletter_title">Newsletter</h2>
+      <div class="newsletter-list">
+        <span data-lang-key="newsletter_item_prints">Prints</span>
+        <span data-lang-key="newsletter_item_brushes">Brushes</span>
+        <span data-lang-key="newsletter_item_paintings">Paintings</span>
+        <span data-lang-key="newsletter_item_workshops">Workshops</span>
+      </div>
 
-  <p data-lang-key="newsletter_text">
-    Subscribe now to receive news about:
-  </p>
+      <form class="newsletter-form">
 
-  <div class="newsletter-list">
-    <span data-lang-key="newsletter_item_prints">Prints</span>
-    <span data-lang-key="newsletter_item_brushes">Brushes</span>
-    <span data-lang-key="newsletter_item_paintings">Paintings</span>
-    <span data-lang-key="newsletter_item_workshops">Workshops</span>
-  </div>
+        <input
+          type="email"
+          data-lang-key="newsletter_placeholder"
+          placeholder="Your email address"
+          required
+        />
 
-  <form class="newsletter-form">
+        <button type="submit" data-lang-key="newsletter_button">
+          Subscribe
+        </button>
 
-    <input
-      type="email"
-      data-lang-key="newsletter_placeholder"
-      placeholder="Your email address"
-      required
-    />
+      </form>
 
-    <button type="submit" data-lang-key="newsletter_button">
-      Subscribe
-    </button>
+      <p class="form-message"></p>
 
-  </form>
-
-  <p class="form-message"></p>
-
-</div>
-
+    </div>
 
   </section>
 
   <!-- =========================
        FOOTER
   ========================== -->
-
   <footer class="footer">
 
+    <div class="footer-top">
 
-<div class="footer-top">
+      <a href="#home" class="footer-logo">
+        ARTIST PORTFOLIO
+      </a>
 
-  <a href="#home" class="footer-logo">
-    ARTIST PORTFOLIO
-  </a>
+      <div class="footer-links">
+        <a href="paintings.html" data-lang-key="footer_paintings">Paintings</a>
+        <a href="brushes.html" data-lang-key="footer_brushes">Brushes</a>
+        <a href="prints.html" data-lang-key="footer_prints">Prints</a>
+        <a href="videos.html" data-lang-key="footer_videos">Videos</a>
+        <a href="about.html" data-lang-key="footer_about">About</a>
+      </div>
 
-  <div class="footer-links">
-    <a href="paintings.html" data-lang-key="footer_paintings">Paintings</a>
-    <a href="brushes.html" data-lang-key="footer_brushes">Brushes</a>
-    <a href="prints.html" data-lang-key="footer_prints">Prints</a>
-    <a href="videos.html" data-lang-key="footer_videos">Videos</a>
-    <a href="about.html" data-lang-key="footer_about">About</a>
-  </div>
+    </div>
 
-</div>
+    <div class="footer-bottom">
 
-<div class="footer-bottom">
+      <p>
+        © <span id="year"></span> Artist Portfolio.
+        All rights reserved.
+      </p>
 
-  <p>
-    © <span id="year"></span> Artist Portfolio.
-    All rights reserved.
-  </p>
+      <a href="#home">
+        Back to top ↑
+      </a>
 
-  <a href="#home">
-    Back to top ↑
-  </a>
-
-</div>
-
+    </div>
 
   </footer>
-  
-    <!-- =========================
+
+  <!-- =========================
        FLOATING CTA
   ========================== -->
   <a href="#classes" class="floating-cta" aria-label="Learn to Paint">
@@ -498,7 +425,7 @@
     <span class="floating-cta-text" data-lang-key="cta_text">Learn to Paint</span>
   </a>
 
-    <!-- =========================
+  <!-- =========================
        CLASSES / WORKSHOPS
   ========================== -->
   <section class="classes-section section-padding" id="classes">
@@ -511,7 +438,6 @@
       </p>
     </div>
 
-    <!-- فیلتر -->
     <div class="classes-filter reveal">
       <button class="filter-btn active" data-filter="all" data-lang-key="filter_all">All</button>
       <button class="filter-btn" data-filter="online" data-lang-key="filter_online">Online</button>
@@ -519,7 +445,6 @@
       <button class="filter-btn" data-filter="hybrid" data-lang-key="filter_hybrid">Hybrid</button>
     </div>
 
-    <!-- گرید کلاس‌ها -->
     <div class="classes-grid">
 
       <!-- کلاس ۱ -->
@@ -602,8 +527,9 @@
         </div>
       </div>
 
-        </div>       <!-- بستن classes-grid -->
-  </section>     <!-- بستن classes-section -->
+    </div>
+
+  </section>
 
 </body>
 </html>
