@@ -7,9 +7,9 @@
     "nav_about": "About",
     "nav_contact": "Contact",
 
-    "hero_eyebrow": "CONTEMPORARY ART",
-    "hero_title_line1": "THE ART OF",
-    "hero_title_line2": "OBSERVATION",
+    "hero_eyebrow": "REALISM ART",
+    "hero_title_line1": "FAHIME IZADIAN",
+    "hero_title_line2": "REALISM",
     "hero_button": "Explore Collection",
     "hero_scroll": "SCROLL",
 
@@ -62,7 +62,7 @@
 
     "chat_title": "Artist Support",
     "chat_status": "● Online",
-    "chat_welcome": "Hi! 👋 Welcome to Artist Portfolio. How can I help you today?",
+    "chat_welcome": "Hi! 👋 Welcome to Fahime Izadian Realism. How can I help you today?",
     "chat_placeholder": "Type your message...",
 
     "cta_text": "Learn to Paint",
@@ -90,7 +90,7 @@
     "class2_desc": "Deepen your technique with oils, glazing and layering.",
     "class2_day": "Tue & Thu",
     "class2_time": "18:00 – 20:30",
-    "class2_loc": "Studio, Tehran",
+    "class2_loc": "Studio, Qom",
     "class2_price": "$79 / session",
     "class2_btn": "Reserve Spot",
 
@@ -121,9 +121,9 @@
     "nav_about": "درباره",
     "nav_contact": "تماس",
 
-    "hero_eyebrow": "هنر معاصر",
-    "hero_title_line1": "هنرِ",
-    "hero_title_line2": "مشاهده",
+    "hero_eyebrow": "هنر رئالیسم",
+    "hero_title_line1": "فهمیه ایزدیان",
+    "hero_title_line2": "رئالیسم",
     "hero_button": "مشاهده مجموعه",
     "hero_scroll": "اسکرول",
 
@@ -176,7 +176,7 @@
 
     "chat_title": "پشتیبانی هنری",
     "chat_status": "● آنلاین",
-    "chat_welcome": "سلام! 👋 به پورتفولیوی هنری خوش آمدید. چطور می‌توانم کمکتان کنم؟",
+    "chat_welcome": "سلام! 👋 به فهمیه ایزدیان خوش آمدید. چطور می‌توانم کمکتان کنم؟",
     "chat_placeholder": "پیام خود را بنویسید...",
 
     "cta_text": "نقاشی یاد بگیر",
@@ -204,7 +204,7 @@
     "class2_desc": "تکنیک خود را با رنگ روغن، لعاب‌کاری و لایه‌گذاری عمیق‌تر کنید.",
     "class2_day": "سه‌شنبه و پنجشنبه",
     "class2_time": "۱۸:۰۰ – ۲۰:۳۰",
-    "class2_loc": "استودیو، تهران",
+    "class2_loc": "استودیو، قم",
     "class2_price": "۷۹ دلار / جلسه",
     "class2_btn": "رزرو جا",
 
