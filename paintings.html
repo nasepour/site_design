@@ -3,16 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Paintings — Artist Portfolio</title>
-  <meta name="description" content="Paintings — Artist Portfolio">
+  <title>Paintings — Fahime Izadian Realism</title>
+  <meta name="description" content="Paintings — Fahime Izadian Realism">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <header class="header">
   <div class="header-container">
     <a href="index.html" class="logo">
-      <span class="logo-main">ARTIST</span>
-      <span class="logo-sub">PORTFOLIO</span>
+      <!-- لوگوی جدید بر اساس نام برند شما -->
+      <span class="logo-main">Fahime Izadian</span>
+      <span class="logo-sub">Realism</span>
     </a>
     <nav class="desktop-nav">
       <a href="paintings.html">Paintings</a>
@@ -37,7 +38,8 @@
 </header>
 <main>
   <section class="page-hero">
-    <div class="page-hero-bg" style="background-image:url('images/paintings.jpg');"></div>
+    <!-- تصویر هدر (بالای صفحه) - از عکس اول استفاده شده است -->
+    <div class="page-hero-bg" style="background-image:url('collection-1.jpg');"></div>
     <div class="page-hero-overlay"></div>
     <div class="page-hero-content reveal">
       <p class="eyebrow">01 / COLLECTION</p>
@@ -51,15 +53,38 @@
         <p>Explore selected works and discover the ideas, materials and details behind each piece.</p>
       </div>
       <div class="card-grid">
-        <article class="art-card reveal"><img src="images/paintings.jpg" alt="Paintings collection"><div class="art-card-body"><h3>Collection I</h3><p>Original artwork and studies.</p></div></article>
-        <article class="art-card reveal"><img src="images/hero.jpg" alt="Featured painting"><div class="art-card-body"><h3>Observation</h3><p>Selected contemporary work.</p></div></article>
-        <article class="art-card reveal"><img src="images/about.jpg" alt="Artist work"><div class="art-card-body"><h3>Vision</h3><p>A study in technique and atmosphere.</p></div></article>
+        <!-- کادر اول: عکس سبز -->
+        <article class="art-card reveal">
+          <img src="collection-1.jpg" alt="Collection I">
+          <div class="art-card-body">
+            <h3>Collection I</h3>
+            <p>Original artwork and studies.</p>
+          </div>
+        </article>
+        
+        <!-- کادر دوم: عکس آبی -->
+        <article class="art-card reveal">
+          <img src="observation.jpg" alt="Observation">
+          <div class="art-card-body">
+            <h3>Observation</h3>
+            <p>Selected contemporary work.</p>
+          </div>
+        </article>
+        
+        <!-- کادر سوم: عکس کلاه حصیری (Vision) -->
+        <article class="art-card reveal">
+          <img src="vision.jpg" alt="Vision">
+          <div class="art-card-body">
+            <h3>Vision</h3>
+            <p>A study in technique and atmosphere.</p>
+          </div>
+        </article>
       </div>
     </section>
 </main>
 <footer class="footer">
   <div class="footer-top">
-    <a href="index.html" class="footer-logo">ARTIST PORTFOLIO</a>
+    <a href="index.html" class="footer-logo">Fahime Izadian Realism</a>
     <div class="footer-links">
       <a href="paintings.html">Paintings</a>
       <a href="brushes.html">Brushes</a>
@@ -70,7 +95,7 @@
     </div>
   </div>
   <div class="footer-bottom">
-    <p>© <span id="year"></span> Artist Portfolio. All rights reserved.</p>
+    <p>© <span id="year"></span> Fahime Izadian Realism. All rights reserved.</p>
     <a href="#">Back to top ↑</a>
   </div>
 </footer>
